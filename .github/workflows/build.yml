@@ -30,7 +30,7 @@ jobs:
       - name: Docker Login
         run: echo ${{secrets.DOCKER_PASSWORD}} | docker login ghcr.io --username ${{ steps.get_repo_owner.outputs.repo_owner }} --password-stdin
       - name: Build ${{ matrix.svc }}
-        run: faas-cli publish ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/faasd-example:${{ github.sha }} -t ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/faasd-example:latest --platforms linux/amd64,linux/arm/v7,linux/arm64
+        run: faas-cli publish ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/faasd-example:${{ github.sha }} --extra-tag ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/faasd-example:latest --platforms linux/amd64,linux/arm/v7,linux/arm64
       - name: Login
         run: echo ${{secrets.OPENFAAS_PASSWORD}} | faas-cli login --gateway ${{secrets.OPENFAAS_URL}} --password-stdin
       - name: Deploy
