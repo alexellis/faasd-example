@@ -1,0 +1,32 @@
+name: build
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+          fetch-depth: 1
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Get TAG
+        id: get_tag
+        run: echo ::set-output name=TAG::latest-dev
+      - name: Get Repo Owner
+        id: get_repo_owner
+        run: echo ::set-output name=repo_owner::$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')
+      - name: Get Commit Message
+        id: get_commit_message
+        run: echo ::set-output name=commit_message::$(git log -1 --pretty=%B 2>&1 | head -n 1)
+      - name: Build ${{ matrix.svc }}
+        run: faas-cli publish ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/rpi-bot:${{ github.sha }} --platform linux/amd64,linux/arm/v7,linux/arm64
