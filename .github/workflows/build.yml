@@ -28,7 +28,7 @@ jobs:
         id: get_repo_owner
         run: echo ::set-output name=repo_owner::$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')
       - name: Docker Login
-        run: echo ${{secrets.DOCKER_PASSWORD}} | docker login ghcr.io --username {{ steps.get_repo_owner.outputs.repo_owner }} --password-stdin
+        run: echo ${{secrets.DOCKER_PASSWORD}} | docker login ghcr.io --username ${{ steps.get_repo_owner.outputs.repo_owner }} --password-stdin
       - name: Build ${{ matrix.svc }}
         run: faas-cli publish ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/rpi-bot:${{ github.sha }} --platforms linux/amd64,linux/arm/v7,linux/arm64
       - name: Login
