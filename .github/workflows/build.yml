@@ -31,4 +31,4 @@ jobs:
         id: get_commit_message
         run: echo ::set-output name=commit_message::$(git log -1 --pretty=%B 2>&1 | head -n 1)
       - name: Build ${{ matrix.svc }}
-        run: faas-cli publish ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/rpi-bot:${{ github.sha }} --platform linux/amd64,linux/arm/v7,linux/arm64
+        run: faas-cli publish ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/rpi-bot:${{ github.sha }} --platforms linux/amd64,linux/arm/v7,linux/arm64
