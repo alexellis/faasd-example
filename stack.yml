@@ -7,4 +7,4 @@ functions:
   rpi-bot:
     lang: go
     handler: ./rpi-bot
-    image: ${DOCKER_IMAGE:ghcr.io/alexellis/faasd-example:latest}
+    image: ${DOCKER_IMAGE:-ghcr.io/alexellis/faasd-example:latest}
