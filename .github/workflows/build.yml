@@ -30,8 +30,8 @@ jobs:
       - name: Docker Login
         run: echo ${{secrets.DOCKER_PASSWORD}} | docker login ghcr.io --username ${{ steps.get_repo_owner.outputs.repo_owner }} --password-stdin
       - name: Build ${{ matrix.svc }}
-        run: DOCKER_IMAGE="ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/faasd-example:${{ github.sha }}" faas-cli publish --extra-tag ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/faasd-example:latest --platforms linux/amd64,linux/arm/v7,linux/arm64
+        run: IMAGE_NAME="ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/faasd-example:latest" faas-cli publish --extra-tag ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/faasd-example:${{ github.sha }} --platforms linux/amd64,linux/arm/v7,linux/arm64
       - name: Login
         run: echo ${{secrets.OPENFAAS_PASSWORD}} | faas-cli login --gateway ${{secrets.OPENFAAS_URL}} --password-stdin
       - name: Deploy
-        run: DOCKER_IMAGE="ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/faasd-example:${{ github.sha }}" faas-cli deploy --gateway ${{secrets.OPENFAAS_URL}}
+        run: IMAGE_NAME="ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/faasd-example:${{ github.sha }}" faas-cli deploy --gateway ${{secrets.OPENFAAS_URL}}
