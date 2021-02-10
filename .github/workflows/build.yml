@@ -27,8 +27,9 @@ jobs:
       - name: Get Repo Owner
         id: get_repo_owner
         run: echo ::set-output name=repo_owner::$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')
-      - name: Get Commit Message
-        id: get_commit_message
-        run: echo ::set-output name=commit_message::$(git log -1 --pretty=%B 2>&1 | head -n 1)
       - name: Build ${{ matrix.svc }}
         run: faas-cli publish ghcr.io/${{ steps.get_repo_owner.outputs.repo_owner }}/rpi-bot:${{ github.sha }} --platforms linux/amd64,linux/arm/v7,linux/arm64
+      - name: Login
+        run: echo ${{secrets.$OPENFAAS_PASSWORD}} | faas-cli login --gateway ${{secrets.$OPENFAAS_URL}} --password-stdin
+      - name: Deploy
+        run: faas-cli deploy --gateway ${{secrets.$OPENFAAS_URL}}
