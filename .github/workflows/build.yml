@@ -26,12 +26,28 @@ jobs:
         run: echo ::set-output name=TAG::latest-dev
       - name: Get Repo Owner
         id: get_repo_owner
-        run: echo ::set-output name=repo_owner::$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')
+        run: >
+          echo ::set-output name=repo_owner::$(echo ${{ github.repository_owner }} |
+          tr '[:upper:]' '[:lower:]')
       - name: Docker Login
-        run: echo ${{secrets.DOCKER_PASSWORD}} | docker login ghcr.io --username ${{ steps.get_repo_owner.outputs.repo_owner }} --password-stdin
-      - name: Build ${{ matrix.svc }}
-        run: OWNER="${{ steps.get_repo_owner.outputs.repo_owner }}" TAG="latest" faas-cli publish --extra-tag ${{ github.sha }} --platforms linux/amd64,linux/arm/v7,linux/arm64
+        run: > 
+          echo ${{secrets.DOCKER_PASSWORD}} | 
+           docker login ghcr.io --username 
+           ${{ steps.get_repo_owner.outputs.repo_owner }} 
+           --password-stdin
+      - name: Publish functions
+        run: >
+          OWNER="${{ steps.get_repo_owner.outputs.repo_owner }}" 
+          TAG="latest"
+          faas-cli publish
+          --extra-tag ${{ github.sha }}
+          --platforms linux/amd64,linux/arm/v7,linux/arm64
       - name: Login
-        run: echo ${{secrets.OPENFAAS_PASSWORD}} | faas-cli login --gateway ${{secrets.OPENFAAS_URL}} --password-stdin
+        run: >
+          echo ${{secrets.OPENFAAS_PASSWORD}} | 
+          faas-cli login --gateway ${{secrets.OPENFAAS_URL}} --password-stdin
       - name: Deploy
-        run: OWNER="${{ steps.get_repo_owner.outputs.repo_owner }}" TAG="${{ github.sha }}" faas-cli deploy --gateway ${{secrets.OPENFAAS_URL}}
+        run: >
+          OWNER="${{ steps.get_repo_owner.outputs.repo_owner }}"
+          TAG="${{ github.sha }}"
+          faas-cli deploy --gateway ${{secrets.OPENFAAS_URL}}
