@@ -12,3 +12,5 @@ functions:
     lang: go
     handler: ./rpi-events
     image:  ghcr.io/${OWNER:-:alexellis}/rpi-events:${TAG:-:latest}
+    environment:
+      content_type:  "text/html"
