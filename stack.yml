@@ -4,13 +4,14 @@ provider:
   gateway: http://127.0.0.1:8080
 
 functions:
-  rpi-bot:
-    lang: go
-    handler: ./rpi-bot
-    image: ghcr.io/${OWNER:-:alexellis}/rpi-bot:${TAG:-:latest}
   rpi-events:
     lang: go
     handler: ./rpi-events
-    image:  ghcr.io/${OWNER:-:alexellis}/rpi-events:${TAG:-:latest}
+    image:  ghcr.io/${OWNER:-alexellis}/rpi-events:${TAG:-latest}
     environment:
       content_type:  "text/html"
+  profile-page:
+    lang: node16
+    handler: ./profile-page
+    image: ghcr.io/${OWNER:-alexellis}/profile-page:${TAG:-latest}
+
