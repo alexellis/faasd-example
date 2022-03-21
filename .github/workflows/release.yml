@@ -1,18 +1,15 @@
-name: build
+name: publish
 
 on:
   push:
-    branches:
-      - '*'
-  pull_request:
-    branches:
+    tags:
       - '*'
 
 permissions:
   actions: read
   checks: write
   contents: read
-  packages: write
+  packages: read
 
 jobs:
   build:
@@ -41,10 +38,13 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: ghcr.io
-      - name: Publish functions
+
+      - name: Login
         run: >
-          OWNER="${{ steps.get_repo_owner.outputs.repo_owner }}" 
-          TAG="latest"
-          faas-cli publish
-          --extra-tag ${{ github.sha }}
-          --platforms linux/arm/v7
+          echo ${{secrets.OPENFAAS_PASSWORD}} | 
+          faas-cli login --gateway ${{secrets.OPENFAAS_URL}} --password-stdin
+      - name: Deploy
+        run: >
+          OWNER="${{ steps.get_repo_owner.outputs.repo_owner }}"
+          TAG="${{ github.sha }}"
+          faas-cli deploy --gateway ${{secrets.OPENFAAS_URL}}
