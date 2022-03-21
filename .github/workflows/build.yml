@@ -8,6 +8,12 @@ on:
     branches:
       - '*'
 
+permissions:
+  actions: read
+  checks: write
+  contents: read
+  packages: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
