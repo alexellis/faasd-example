@@ -10,8 +10,8 @@ functions:
     image:  ghcr.io/${OWNER:-alexellis}/rpi-events:${TAG:-latest}
     environment:
       content_type:  "text/html"
+
   profile-page:
     lang: node16
     handler: ./profile-page
     image: ghcr.io/${OWNER:-alexellis}/profile-page:${TAG:-latest}
-
