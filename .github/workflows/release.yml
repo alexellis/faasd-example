@@ -20,12 +20,8 @@ jobs:
           fetch-depth: 1
       - name: Get faas-cli
         run: curl -sLSf https://cli.openfaas.com | sudo sh
-      - name: Pull template defintions
+      - name: Pull template definitions
         run: faas-cli template pull
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
       - name: Get TAG
         id: get_tag
         run: echo ::set-output name=TAG::latest-dev
@@ -40,7 +36,6 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: ghcr.io
-
       - name: Login
         run: >
           echo ${{secrets.OPENFAAS_PASSWORD}} | 
