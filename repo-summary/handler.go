@@ -30,7 +30,8 @@ func Handle(req []byte) string {
 	client := github.NewClient(tc)
 
 	updatedRepos, _, err := client.Repositories.List(ctx, "", &github.RepositoryListOptions{
-		Visibility: "public",
+		Visibility:  "public",
+		Affiliation: "owner",
 		// Type:        "owner",
 		Sort:        "updated",
 		Direction:   "desc",
