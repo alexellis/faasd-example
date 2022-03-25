@@ -21,11 +21,10 @@ functions:
     handler: ./repo-summary
     image: ghcr.io/${OWNER:-alexellis}/repo-summary:${TAG:-latest}
     build_args:
-      GO111MODULE: on
+      GO111MODULE: off
     environment:
       write_debug: true
       read_debug: true
       combined_output: false
       read_timeout: 10s
       write_timeout: 10s
-

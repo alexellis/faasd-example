@@ -1,4 +1,4 @@
-module github.com/alexellis/faasd-example/uptime-checker
+module handler
 
 go 1.17
 
