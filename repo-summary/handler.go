@@ -52,6 +52,7 @@ func Handle(req []byte) string {
 			Issues:   repo.GetOpenIssuesCount(),
 			Watchers: repo.GetWatchersCount(),
 			Updated:  repo.GetUpdatedAt().Time,
+			// URL:      repo.GetHTMLURL(),
 		})
 
 	}
@@ -62,6 +63,7 @@ func Handle(req []byte) string {
 
 type RepoSummary struct {
 	FullName string    `json:"full_name"`
+	URL      string    `json:"url"`
 	Stars    int       `json:"stars"`
 	Issues   int       `json:"issues"`
 	Watchers int       `json:"watchers"`
