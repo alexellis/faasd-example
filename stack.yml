@@ -20,6 +20,8 @@ functions:
     lang: go
     handler: ./repo-summary
     image: ghcr.io/${OWNER:-alexellis}/repo-summary:${TAG:-latest}
+    build_args:
+      GO111MODULE: on
     environment:
       write_debug: true
       read_debug: true
