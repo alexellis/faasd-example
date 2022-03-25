@@ -15,3 +15,15 @@ functions:
     lang: node16
     handler: ./profile-page
     image: ghcr.io/${OWNER:-alexellis}/profile-page:${TAG:-latest}
+
+  repo-summary:
+    lang: go
+    handler: ./repo-summary
+    image: ghcr.io/${OWNER:-alexellis}/repo-summary:${TAG:-latest}
+    environment:
+      write_debug: true
+      read_debug: true
+      combined_output: false
+      read_timeout: 10s
+      write_timeout: 10s
+
