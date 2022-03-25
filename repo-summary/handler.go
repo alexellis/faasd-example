@@ -59,8 +59,8 @@ func Handle(req []byte) string {
 }
 
 type RepoSummary struct {
-	FullName string
-	Stars    int
-	Issues   int
-	Watchers int
+	FullName string `json:"full_name"`
+	Stars    int    `json:"stars"`
+	Issues   int    `json:"issues"`
+	Watchers int    `json:"watchers"`
 }
