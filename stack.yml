@@ -28,3 +28,6 @@ functions:
       combined_output: false
       read_timeout: 10s
       write_timeout: 10s
+    secrets:
+    - repo-reader-token
+
