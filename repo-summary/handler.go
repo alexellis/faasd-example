@@ -3,9 +3,9 @@ package function
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"log"
 	"os"
+	"strings"
 
 	"github.com/google/go-github/v43/github"
 	"golang.org/x/oauth2"
@@ -20,7 +20,7 @@ func Handle(req []byte) string {
 		return "Unable to read token file"
 	}
 
-	token := string(tokenData)
+	token := strings.TrimSpace(string(tokenData))
 	ctx := context.Background()
 	ts := oauth2.StaticTokenSource(
 		&oauth2.Token{AccessToken: token},
@@ -40,7 +40,7 @@ func Handle(req []byte) string {
 
 	if err != nil {
 		log.Printf("Unable to list repositories: %v", err)
-		return fmt.Sprintf("Unable to list repos: %v", err)
+		return "Unable to list repositories"
 	}
 
 	summaries := []RepoSummary{}
