@@ -33,7 +33,6 @@ func Handle(req []byte) string {
 		Visibility:  "public",
 		Type:        "owner",
 		Sort:        "updated",
-		Affiliation: "owner",
 		Direction:   "desc",
 		ListOptions: github.ListOptions{PerPage: 10},
 	})
