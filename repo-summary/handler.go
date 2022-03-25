@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/google/go-github/v43/github"
 	"golang.org/x/oauth2"
@@ -50,6 +51,7 @@ func Handle(req []byte) string {
 			Stars:    repo.GetStargazersCount(),
 			Issues:   repo.GetOpenIssuesCount(),
 			Watchers: repo.GetWatchersCount(),
+			Updated:  repo.GetUpdatedAt().Time,
 		})
 
 	}
@@ -59,8 +61,9 @@ func Handle(req []byte) string {
 }
 
 type RepoSummary struct {
-	FullName string `json:"full_name"`
-	Stars    int    `json:"stars"`
-	Issues   int    `json:"issues"`
-	Watchers int    `json:"watchers"`
+	FullName string    `json:"full_name"`
+	Stars    int       `json:"stars"`
+	Issues   int       `json:"issues"`
+	Watchers int       `json:"watchers"`
+	Updated  time.Time `json:"updated"`
 }
